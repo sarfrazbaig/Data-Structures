@@ -14,21 +14,35 @@ node* createNode(int data)
 	newNode->next = NULL;
 }
 
-
-bool hasCycle(node* head)
+int findStartOfLoop(node* head)
 {
-	node* fastPtr=head,*slowPtr=head;
+	node* slowPtr = head,*fastPtr=head;
+	int loopExists = 0;
 	while(slowPtr && fastPtr && fastPtr->next)
 	{
 		slowPtr = slowPtr->next;
 		fastPtr = fastPtr->next->next;
 		if(slowPtr==fastPtr)
 		{
-			return 1;
+			loopExists = 1;
+			break;
 		}
 	}
 
-	return 0;
+	if(loopExists)
+	{
+		slowPtr = head;
+		while(slowPtr!=fastPtr)
+		{
+			slowPtr = slowPtr->next;
+			fastPtr = fastPtr->next;
+		}
+		return slowPtr->data;
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 int main()
@@ -38,9 +52,8 @@ int main()
 	head->next->next = createNode(3);
 	head->next->next->next = createNode(4);
 	head->next->next->next->next = createNode(5);
-	//Comment out this line to check if linklist has loop or not
 	head->next->next->next->next = head->next->next;
-	cout<<hasCycle(head)<<endl;
+
+	cout<<findStartOfLoop(head)<<endl;
+
 }
-
-
