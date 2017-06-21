@@ -37,7 +37,7 @@ node* createNode(int data)
 int middleOfLinkedList(node* head)
 {
 	node* fastPtr=head,*slowPtr=head;
-	// fastPtr = fastPtr->next;
+	// fastPtr = fastPtr->next;www
 	int i=0;
 
 
