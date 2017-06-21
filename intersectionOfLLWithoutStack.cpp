@@ -7,6 +7,13 @@ struct node
 	node* next;
 };
 
+node* createNode(int data)
+{
+	node* newNode = new node();
+	newNode->data = data;
+	newNode->next = NULL;
+}
+
 void printLinkList(node* head)
 {
 	while(head!=NULL)
@@ -24,40 +31,57 @@ void printLinkList(node* head)
 	cout<<endl;
 }
 
-node* createNode(int data)
+int findIntersection(node*head1,node*head2)
 {
-	node* newNode = new node();
-	newNode->data = data;
-	newNode->next = NULL;
+	int l1=0,l2=0,dif=0;
+	node*head_one = head1,*head_two = head2;
+
+	while(head_one!=NULL)
+	{
+		l1++;
+		head_one = head_one->next;
+	}
+
+	while(head_two!=NULL)
+	{
+		l2++;
+		head_two = head_two->next;
+	}
+
+	if(l1>l2)
+	{
+		head_one = head1;
+		head_two = head2;
+		dif = l1-l2;
+	}
+	else
+	{
+		head_one = head2;
+		head_two = head1;
+		dif = l2-l1;
+	}
+
+	for(int i=0;i<dif;i++)
+	{
+		head_one = head_one->next;
+	}
+
+	while(head_one!=NULL && head_two!=NULL)
+	{
+		if(head_one==head_two)
+		{
+			return head_one->data;
+		}
+		head_one = head_one->next;
+		head_two = head_two->next;
+	}
+
+	return 0;
+
+
 }
 
 
-int findIntersection(node *head1,node* head2)
-{
-	stack<node*>s1,s2;
-	while(head1!=NULL)
-	{
-		s1.push(head1);
-		head1=head1->next;
-	}
-	while(head2!=NULL)
-	{
-		s2.push(head2);
-		head2 = head2->next;
-	}
-
-	node* current=NULL;
-	while(s1.top()==s2.top())
-	{
-		current = s1.top();
-		s1.pop();
-		s2.pop();
-	}
-
-	return current->data;
-
-
-}
 
 
 int main()
@@ -74,6 +98,7 @@ int main()
 	head2->next->next = head->next->next;
 	printLinkList(head);
 	printLinkList(head2);
-	cout<<findIntersection(head,head2)<<endl;
-}
 
+	cout<<findIntersection(head,head2)<<endl;
+
+}
