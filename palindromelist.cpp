@@ -38,7 +38,7 @@ node* middle(node* head)
 	node* fast = head,*slow = head;
 	int i=0;
 	int count = 0;
-	while(fast->next!=NULL)
+	while(fast->next!=NULL){
 	if(i==0)
 	{
 		count++;
@@ -51,6 +51,7 @@ node* middle(node* head)
 		fast = fast->next;
 		slow = slow->next;
 		i=0;
+	}
 	}
 	return slow->next;
 }
