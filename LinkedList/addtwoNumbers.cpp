@@ -122,6 +122,10 @@ node* addLinkLists(node* head1,node* head2)
 				temp6->data = temp6->data-10;
 				carry = 1;
 			}
+			else
+			{
+				carry = 0;
+			}
 			temp6 = temp6->next;
 		}
 		if(carry>0)

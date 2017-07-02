@@ -18,44 +18,21 @@ node* createNode(int data)
 	return newNode;
 }
 
-
-vector<int> path;
-
-bool leafToNodeSumPath(node* root,int sum)
+int maxInBinaryTree(node*root)
 {
-	if(root==NULL)
+	int root_val,left,right,maxVal = INT_MIN;
+	if(root!=NULL)
 	{
-		return false;
+		root_val = root->data;
+		left = maxInBinaryTree(root->left);
+		right = maxInBinaryTree(root->right);
+
+		maxVal = max(root_val,max(left,right));
 	}
 
-	if(root->left==NULL && root->right==NULL)
-	{
-		if(root->data==sum)
-		{
-			path.push_back(root->data);
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+	return maxVal;
 
-	if(leafToNodeSumPath(root->left,sum-root->data))
-	{
-		path.push_back(root->data);
-		return true;
-	}
-
-	if(leafToNodeSumPath(root->right,sum-root->data))
-	{
-		path.push_back(root->data);
-		return true;
-	}
-
-	return false;
 }
-
 
 int main()
 {
@@ -67,7 +44,6 @@ int main()
 	root->right->left = createNode(6);
 	root->right->right = createNode(7);
 
-
-	cout<<leafToNodeSumPath(root,100)<<endl;
+	cout<<maxInBinaryTree(root)<<endl;
 }
 
