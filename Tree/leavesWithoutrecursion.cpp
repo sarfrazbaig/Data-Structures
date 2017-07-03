@@ -18,21 +18,38 @@ node* createNode(int data)
 	return newNode;
 }
 
-int maxInBinaryTree(node*root)
+int leavesOfTree(node*root)
 {
-	int root_val,left,right,maxVal = INT_MIN;
-	if(root!=NULL)
+	if(root==NULL)
+		return 0;
+	int leaves = 0;
+	node* temp;
+	queue<node*>q;
+	q.push(root);
+	while(!q.empty())
 	{
-		root_val = root->data;
-		left = maxInBinaryTree(root->left);
-		right = maxInBinaryTree(root->right);
+		temp = q.front();
+		q.pop();
 
-		maxVal = max(root_val,max(left,right));
+		if(temp->left==NULL && temp->right==NULL)
+		{
+			leaves++;
+		}
+
+		if(temp->left)
+			q.push(temp->left);
+		if(temp->right)
+			q.push(temp->right);
 	}
 
-	return maxVal;
-
+	return leaves;
 }
+
+
+
+
+
+
 
 int main()
 {
@@ -44,6 +61,6 @@ int main()
 	root->right->left = createNode(6);
 	root->right->right = createNode(7);
 
-	cout<<maxInBinaryTree(root)<<endl;
+	cout<<leavesOfTree(root)<<endl;
 }
 

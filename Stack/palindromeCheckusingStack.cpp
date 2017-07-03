@@ -26,9 +26,6 @@ bool isPalindrome(string s)
 	return true;
 }
 
-
-
-
 int main()
 {
 	string s = "ababXbaba";
