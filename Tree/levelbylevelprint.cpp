@@ -8,32 +8,6 @@ struct node
 	node* right;
 };
 
-int height(node* root)
-{
-	if(root==NULL)
-	{
-		return 0;
-	}
-
-	return (max(height(root->left),height(root->right)))+1;
-}
-
-int diameter(node*root)
-{
-	if(root==NULL)
-	{
-		return 0;
-	}
-
-	int lDiameter = diameter(root->left);
-	int rdiameter = diameter(root->right);
-
-	int lheight = height(root->left);
-	int rHeight = height(root->right);
-
-	return (max(lheight+rHeight+1, max(lDiameter,rdiameter)));
-}
-
 node* createNode(int data)
 {
 	node* newNode = (node*)malloc(sizeof(node));
@@ -43,6 +17,41 @@ node* createNode(int data)
 
 	return newNode;
 }
+
+
+
+void printLevelByLevel(node* root)
+{
+	queue<node*>q;
+	q.push(root);
+	q.push(NULL);
+
+	while(!q.empty())
+	{
+		node* temp = q.front();
+		q.pop();
+
+		if(temp==NULL)
+		{
+			cout<<endl;
+			if(!q.empty())
+			{
+				q.push(NULL);
+			}
+		}
+		else{
+		cout<<temp->data<<" ";
+		if(temp->left)
+		{
+			q.push(temp->left);
+		}
+		if(temp->right)
+		{
+			q.push(temp->right);
+		}}
+	}
+}
+
 
 int main()
 {
@@ -54,6 +63,6 @@ int main()
 	root->right->left = createNode(6);
 	root->right->right = createNode(7);
 
-	cout<<diameter(root)<<endl;
+	printLevelByLevel(root);
 }
 
